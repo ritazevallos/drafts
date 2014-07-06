@@ -1,0 +1,49 @@
+<% drafts.each do |draft| %>
+	<div class="draft-block" data-id="<%= draft.id %>">
+		<div class="tools" style="display: none">
+			<%= link_to "<i class=\"glyphicon glyphicon-remove\"></i>".html_safe, draft, remote: true, method: :delete, data: {confirm: "You sure?"} %> 
+		</div>
+		<div class="draft-preview">
+			<%= link_to simple_format(draft.content), draft_path(draft), remote: true %>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(".draft-block").click( function(){
+		$thisDraftId = $(this).attr("data-id");
+	    $.ajax({
+	      type: "GET",
+	      url: "/drafts/"+$thisDraftId,
+		  dataType : 'script' });
+		$('#draftForm').data('currentdraft',$thisDraftId);
+	})
+
+	$('.draft-block').hover(function(){
+		$thisDraftId = $(this).attr("data-id");
+		$currentDraftId = $('#draftForm').data('currentdraft')
+
+		$(this).find('.tools').show();
+
+		//compare
+		$.ajax({
+			type: "GET",
+			url: "/drafts/compare",
+			dataType: 'json',
+			data: { current: $currentDraftId,
+					other: $thisDraftId
+			},
+			complete: function() {},
+			success: function(data, textStatus, xhr){
+			$('#form-container').html(data.diff);
+				console.log("Diff html: " + data.diff);
+			},
+			error: function (){
+				alert("Ajax error calling compare!")
+			}
+		});
+	}, function(){
+		$(this).find('.tools').hide();
+	})
+
+</script>

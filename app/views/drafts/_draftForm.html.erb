@@ -1,0 +1,13 @@
+<div id="draftForm" data-currentdraft="<%= @draft.id %>">
+	<%= form_for draft, remote: true do |f| %>
+		<ul class="errors"></ul>
+		<div class="form-group">
+			<%= f.text_area :content, rows: 25, class: 'form-control' %>
+		</div>
+		<%= f.submit "Save Draft", class: "btn btn-primary" %>
+	<% end %>
+</div>
+
+<script>
+console.log( "current draft: " + $('#draftForm').data('currentdraft') );
+</script>
