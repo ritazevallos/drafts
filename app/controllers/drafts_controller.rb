@@ -38,7 +38,10 @@ class DraftsController < ApplicationController
   def destroy
   	@draft = Draft.find(params[:id])
   	@drafts = Draft.all
+    @destroyId = @draft.id
     @draft.destroy
+    @replaceDraft = Draft.last
+
   	respond_to do |format|
   		format.html
   		format.js
@@ -46,13 +49,21 @@ class DraftsController < ApplicationController
   end
 
   def compare # current and other are IDs of drafts
-    @current = Draft.find(params[:current]).content
-    @other = Draft.find(params[:other]).content
-    @diff = Differ.diff_by_char(@current, @other)
-    @diff.format_as(:html)
-    puts @diff.format_as(:html)
-    if request.xhr?
-      render json: {diff: @diff.format_as(:html)}
+    if Draft.exists?(params[:current]) and Draft.exists?(params[:other])
+      puts "in if"
+      @current = Draft.find(params[:current]).content
+      @other = Draft.find(params[:other]).content
+      @diffTemp = Differ.diff_by_char(@other, @current)
+      @diff = @diffTemp.format_as(:html)
+      puts @diff
+
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      puts "Tried to call Drafts#compare with invalid draft IDs: " + 
+        params[:current] + "and/or" + params[:other]
     end
   end
 

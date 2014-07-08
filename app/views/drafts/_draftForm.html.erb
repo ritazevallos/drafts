@@ -1,8 +1,8 @@
-<div id="draftForm" data-currentdraft="<%= @draft.id %>">
-	<%= form_for draft, remote: true do |f| %>
+<div id="draftForm" data-currentdraft="<%= editdraft.id %>">
+	<%= form_for editdraft, remote: true do |f| %>
 		<ul class="errors"></ul>
 		<div class="form-group">
-			<%= f.text_area :content, rows: 25, class: 'form-control' %>
+			<%= f.text_area :content, class: 'bigTextArea' %>
 		</div>
 		<%= f.submit "Save Draft", class: "btn btn-primary" %>
 	<% end %>

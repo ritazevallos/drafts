@@ -1,7 +1,11 @@
 <div class="container-fluid">
 	<div class="row" id="content">
-		<div class="col-md-6 col-md-offset-1" id="form-container">
-			<%= render 'draftForm', draft: @draft %>
+		<div class="col-md-6 col-md-offset-1">
+			<div id="form-container">
+				<%= render 'draftForm', editdraft: @draft %>
+			</div>
+			<div id="diff-container" style="display:none">
+			</div>
 		</div>
 		<div class="col-md-4" id="bucket">
 			<%= render 'bucket', drafts: @drafts %>
