@@ -1,6 +1,9 @@
 $('#bucket').html("<%= escape_javascript(render 'bucket', drafts: @drafts) %>")
 var $destroyId = <%= @destroyId %>
 if ($destroyId == $('#draftForm').data('currentdraft')){
-	console.log('deleted current draft--so replacing with most recent, ' + <%= @replaceDraft.id %>)
-	$('#form-container').html("<%= escape_javascript(render 'draftForm', editdraft: @replaceDraft) %>")
+	console.log('deleted current draft--so replacing with most recent, ' + <%= @replaceDraft.id %>);
+	$('#form-container').html("<%= escape_javascript(render 'draftForm', editdraft: @replaceDraft) %>");
+	console.log('and after');
+	$('#form-container').hide();//for some reason I have to do this for the content 
+	$('#form-container').show();//to be updated
 }
