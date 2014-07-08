@@ -1,36 +1,5 @@
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 
-.tools{
-	float:right;
-	position:relative;
-	top:0px;
-	right:0px;
-	z-index:2;
-	opacity:0.5;
-	a{
-		color:#a8a8a8;
-	}
-	margin:0.5em;
-}
-
-#diff-container,.bigTextArea{
-	display: block;
-	width: 100%;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	height:300px;
-	margin:10px 10px 10px 0px;
-}
-
 body { 
 	padding-bottom: 70px; 
 	color:#000000;
@@ -52,14 +21,58 @@ i {
     font-size: 0.8em;
 }
 
+/* THE SIDEBAR */
+
 .draft-block{
+	float:left;
 	cursor: pointer;
 	z-index:1;
+	margin: 5px;
+}
+
+.tools{
+	position:relative;
+	text-align:right;
+	top:0px;
+	right:0px;
+	z-index:2;
+	opacity:0.5;
+	a{
+		color:#a8a8a8;
+		&:hover, &:active{
+			color:black;
+		}
+	}
+	margin:0.5em;
+	margin-bottom:-21px;
 }
 
 .draft-preview{
+	position:relative;
 	background-color: #f6f6f6;
 	border:1px solid black;
 	padding:10px;
-	font-size:0.5em;
+	font-size:0.6em;
+	line-height:1.4em;
+	height:100%;
+	width:100%;
+}
+
+#diff-container,.bigTextArea{
+	display: block;
+	width: 100%;
+	padding: 6px 12px;
+	font-size: 1.2em;
+	line-height: 1.4em;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	height:300px;
+	overflow:auto;
+	margin:10px 10px 10px 0px;
 }

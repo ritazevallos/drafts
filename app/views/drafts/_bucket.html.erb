@@ -4,7 +4,7 @@
 			<%= link_to "<i class=\"glyphicon glyphicon-remove\"></i>".html_safe, draft, remote: true, method: :delete, data: {confirm: "You sure you want to delete draft "+ draft.id.to_s}, class: 'delete-link' %> 
 		</div>
 		<div class="draft-preview">
-			<%= link_to simple_format(draft.content), draft_path(draft), remote: true %>
+			<%= link_to draft.content.gsub("\n", "<br>").html_safe, draft_path(draft), remote: true %>
 		</div>
 	</div>
 <% end %>
@@ -40,7 +40,7 @@
 			error: function (){
 				alert("Ajax error calling compare!")
 			}
-			
+
 		});
 	}, function(){
 		$currentDraftId = $('#draftForm').data('currentdraft')
