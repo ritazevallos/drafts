@@ -3,6 +3,7 @@ Drafts::Application.routes.draw do
   resources :drafts do
     collection do
       get 'compare'
+      get 'save'
     end
   end
 

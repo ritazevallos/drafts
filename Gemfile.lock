@@ -56,10 +56,15 @@ GEM
     i18n (0.6.9)
     jbuilder (1.0.2)
       activesupport (>= 3.0.0)
+    jquery-minicolors-rails (2.1.4.0)
+      jquery-rails
+      rails (>= 3.2.8)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    ledermann-rails-settings (2.3.0)
+      activerecord (>= 3.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -157,7 +162,9 @@ DEPENDENCIES
   differ
   gon
   jbuilder (= 1.0.2)
+  jquery-minicolors-rails
   jquery-rails (= 3.0.4)
+  ledermann-rails-settings
   pg (= 0.15.1)
   rails (= 4.0.5)
   rails_12factor (= 0.0.2)

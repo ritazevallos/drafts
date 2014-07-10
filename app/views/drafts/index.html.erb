@@ -1,14 +1,63 @@
 <div class="container-fluid">
 	<div class="row" id="content">
 		<div class="col-md-6 col-md-offset-1">
-			<div id="form-container">
+
+			
+			<div id="form-container" class="typography">
 				<%= render 'draftForm', editdraft: @draft %>
 			</div>
-			<div id="diff-container" style="display:none">
+
+			<div id="diff-container" style="display:none" class="typography">
 			</div>
 		</div>
 		<div class="col-md-5" id="bucket">
 			<%= render 'bucket', drafts: @drafts %>
 		</div>
 	</div>
+
+			
+			<div id="info">
+			Alt-S to save a draft, Alt-T to change typography
+			</div>
+
+	<!-- Button trigger settings modal -->
+	<button id="showModal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#settings" style="display:none">
+	</button>
+
+	<!-- Settings Modal -->
+	<div class="modal fade typography" id="settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Settings</h4>
+	      </div>
+	      <div class="modal-body" id="settings">
+			<%= render 'settings' %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
+
+
+<script>
+var map = {18: false, 17: false, 83: false, 84: false}; //18: alt; 17: ctrl, 83: S, 84: T
+$(document).keydown(function(e) {
+    if (e.keyCode == 18 || e.keyCode == 17 || e.keyCode == 83 || e.keyCode == 84) {
+        map[e.keyCode] = true;
+        if ((map[18] && map[83])) {
+            $('#formButton').click();
+            e.preventDefault();
+        }
+        else if ((map[18] && map[84])) {
+            $('#showModal').click()
+            e.preventDefault();
+        }
+    }
+}).keyup(function(e) {
+    if (e.keyCode in map) {
+        map[e.keyCode] = false;
+    }
+});
+</script>

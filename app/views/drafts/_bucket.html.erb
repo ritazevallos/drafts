@@ -1,9 +1,12 @@
+<% if 1 != 1 %> <!-- change this depending on settings -->
+	<% drafts = drafts.reverse %>
+<% end %>
 <% drafts.each do |draft| %>
 	<div class="draft-block" data-id="<%= draft.id %>">
 		<div class="tools">
-			<%= link_to "<i class=\"glyphicon glyphicon-remove\"></i>".html_safe, draft, remote: true, method: :delete, data: {confirm: "You sure you want to delete draft "+ draft.id.to_s}, class: 'delete-link' %> 
+			<%= link_to "<span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span>".html_safe, draft, remote: true, method: :delete, data: {confirm: "You sure you want to delete draft "+ draft.id.to_s}, class: 'delete-link' %> 
 		</div>
-		<div class="draft-preview">
+		<div class="typography draft-preview ">
 			<%= link_to draft.content.gsub("\n", "<br>").html_safe, draft_path(draft), remote: true %>
 		</div>
 	</div>

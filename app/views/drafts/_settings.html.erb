@@ -1,0 +1,192 @@
+
+
+	<div class="panel panel-default">
+  <div class="panel-body">
+
+  This is what normal text looks like. <ins>This is inserted.</ins> <del>This is deleted.</del>
+</div>
+  </div>
+<table class="table"><tr>
+<td>
+<input id="color" type="color" />
+</td>
+	<td>
+		<select id="fontface" class="form-control">
+			<option value="georgia, serif" style="font-family: georgia, serif">Georgia</option>
+			<option value="'palatino linotype', palatino, serif" style="font-family: 'palatino linotype', palatino, serif">Palatino Linotype</option>
+			<option value="times new roman, times, serif" style="font-family: times new roman, times, serif">Times New Roman</option>
+			<option value="Arial, Helvetica, sans-serif" style="font-family: Arial, Helvetica, sans-serif">Arial</option>
+			<option value="Tahoma, Geneva, sans-serif" style="font-family: Tahoma, Geneva, sans-serif">Tahoma</option>
+			<option value="Trebuchet MS, Helvetica, sans-serif" style="font-family: Trebuchet MS, Helvetica, sans-serif">Trebuchet MS</option>
+		</select>
+
+	</td><td class="vert-align">
+		<input id="fontsize" type="range" name="fontsize" min="0.5" max="2" step="0.1"/>
+	</td>
+	</tr>
+</table>
+<h5>Inserted text</h5>
+<table class="table"><tr><td>
+
+		<input id="ins-color" type="color" />
+	</td>
+	<td>
+		
+<label class="radio-inline">
+    <input type="radio" name="ins-decoration" id="ins-strike" value="line-through">
+    <strike>strike</strike>
+  </label>
+</td>
+<td>
+<label class="radio-inline">
+    <input type="radio" name="ins-decoration" id="ins-underline" value="underline" checked>
+    <u>underline</u>
+  </label>
+
+	</td>
+<td>
+<label class="checkbox-inline">
+    <input type="checkbox" name="ins-bold" id="ins-bold" value="bold">
+    <b>bold</b>
+  </label>
+
+	</td>
+<td>
+<label class="checkbox-inline">
+    <input type="checkbox" name="ins-italic" id="ins-italic" value="italic">
+    <i>italic</i>
+  </label>
+
+	</td>
+	</tr>
+</table>	
+<h5>Deleted text</h5>
+<table class="table"><tr><td>
+<input id="del-color" type="color" />
+</td>
+		<td>
+		
+<label class="radio-inline">
+    <input type="radio" name="del-decoration" id="del-strike" value="line-through" checked>
+    <strike>strike</strike>
+  </label>
+</td>
+<td>
+<label class="radio-inline">
+    <input type="radio" name="del-decoration" id="del-underline" value="underline">
+    <u>underline</u>
+  </label>
+
+	</td>
+<td>
+<label class="checkbox-inline">
+    <input type="checkbox" name="del-bold" id="del-bold" value="bold">
+    <b>bold</b>
+  </label>
+
+	</td>
+<td>
+<label class="checkbox-inline">
+    <input type="checkbox" name="del-italic" id="del-italic" value="italic">
+    <i>italic</i>
+  </label>
+
+	</td>
+	</tr>
+</table>
+
+<script>
+	//helper function to convert color to hex
+	function rgb2hex(rgb) {
+	     if (  rgb.search("rgb") == -1 ) {
+	          return rgb;
+	     } else {
+	          rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+	          function hex(x) {
+	               return ("0" + parseInt(x).toString(16)).slice(-2);
+	          }
+	          return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]); 
+	     }
+	}
+
+	// prepopulate current form input
+	$( document ).ready(function(){
+		$('#color').val(rgb2hex($('.typography').css('color')));
+
+		$('#ins-color').val(rgb2hex($('ins').css('color')));
+
+		$('#del-color').val(rgb2hex($('del').css('color')));
+		
+		$('#fontface').val($('.typography').css('font-family'));
+		
+		$('#fontsize').val(parseInt($('.typography').css('font-size'))/16.0);
+
+		$("input[name='del-decoration']").val($('ins').css('text-decoration')); //not working because it's giving the color and shit too
+
+		$("input[name='del-decoration']").val($('del').css('text-decoration')); //not working because it's giving the color and shit too
+
+		//todo: I haven't finished bold and italic yet
+	})
+
+	// set responses to form input
+	$('#color').change(function(){
+		$('.typography').css('color',$(this).val());
+	})
+	$('#fontface').change(function(){
+		$('.typography').css('font-family',$(this).val());
+	})
+	$('#fontsize').on("change mousemove", function(){
+		$('.typography').css('font-size',$(this).val()*16+'px');
+	})
+	$('#ins-color').change(function(){
+		$('ins').css('color',$(this).val())
+	})
+	$('#ins-strike').change(function(){
+		$('ins').css('text-decoration',$(this).val())
+	})
+	$('#ins-underline').change(function(){
+		$('ins').css('text-decoration',$(this).val())
+	})
+	$('#ins-bold').change(function(){
+		if ($(this).prop('checked')){
+			$('ins').css('font-weight','bold')
+		}
+		else{
+			$('ins').css('font-weight','normal')
+		}
+	})
+	$('#ins-italic').change(function(){
+		if ($(this).prop('checked')){
+			$('ins').css('font-style','italic')
+		}
+		else{
+			$('ins').css('font-style','normal')
+		}
+	})
+	$('#del-color').change(function(){
+		$('del').css('color',$(this).val())
+	})
+	$('#del-strike').change(function(){
+		$('del').css('text-decoration',$(this).val())
+	})
+	$('#del-underline').change(function(){
+		$('del').css('text-decoration',$(this).val())
+	})
+	$('#del-bold').change(function(){
+		if ($(this).prop('checked')){
+			alert('bold checked')
+			$('del').css('font-weight','bold')
+		}
+		else{
+			$('del').css('font-weight','normal')
+		}
+	})
+	$('#del-italic').change(function(){
+		if ($(this).prop('checked')){
+			$('del').css('font-style','italic')
+		}
+		else{
+			$('del').css('font-style','normal')
+		}
+	})
+</script>

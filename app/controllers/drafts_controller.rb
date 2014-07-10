@@ -1,4 +1,10 @@
 class DraftsController < ApplicationController
+  def printXml
+    respond_to do |format|
+      format.xml 
+    end
+  end
+
   def index
   	@drafts = Draft.all
   	if @drafts.empty?
@@ -53,7 +59,7 @@ class DraftsController < ApplicationController
       puts "in if"
       @current = Draft.find(params[:current]).content
       @other = Draft.find(params[:other]).content
-      @diffTemp = Differ.diff_by_char(@other, @current)
+      @diffTemp = Differ.diff_by_word(@other, @current)
       @diff = @diffTemp.format_as(:html)
       puts @diff
 
