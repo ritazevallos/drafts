@@ -1,4 +1,6 @@
 class DraftsController < ApplicationController
+  before_action :require_login, only: [:create, :update, :destroy]
+
   def printXml
     respond_to do |format|
       format.xml 
@@ -46,8 +48,12 @@ class DraftsController < ApplicationController
   	@drafts = Draft.all
     @destroyId = @draft.id
     @draft.destroy
-    @replaceDraft = Draft.last
-
+    if @Draft.empty?
+      @replaceDraft = Draft.new
+    else
+      @replaceDraft = Draft.last
+    end
+    
   	respond_to do |format|
   		format.html
   		format.js
@@ -78,5 +84,13 @@ class DraftsController < ApplicationController
 
   def draft_params
   	params.require(:draft).permit(:content)
+  end
+
+  def require_login
+    unless user_signed_in?
+      flash[:error] = "You must be logged in to access this section"
+      flash.keep(:notice)
+      render js: "window.location = '"+new_user_session_path+"'"
+    end
   end
 end

@@ -1,11 +1,16 @@
 Drafts::Application.routes.draw do
 
+  devise_for :users
   resources :drafts do
     collection do
       get 'compare'
       get 'save'
     end
   end
+
+authenticate :user do
+  resources :drafts, only: [:create, :update, :destroy]
+end
 
 
   root 'drafts#index'

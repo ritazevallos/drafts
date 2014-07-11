@@ -13,9 +13,9 @@ group :test do
   gem'capybara','2.1.0'
 end
 
-gem 'jquery-minicolors-rails'
-gem 'ledermann-rails-settings' # settings hash
-gem 'gon' # may use this in the future to pass ruby data from controller to javascript
+gem 'devise'
+#gem 'ledermann-rails-settings' # settings hash
+#gem 'gon' # may use this in the future to pass ruby data from controller to javascript
 gem 'differ'
 gem'sass-rails','4.0.1'
 gem'uglifier','2.1.1'
