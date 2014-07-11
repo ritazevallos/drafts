@@ -8,11 +8,21 @@ class DraftsController < ApplicationController
   end
 
   def index
-  	@drafts = current_user.drafts
+    if user_signed_in?
+  	 @drafts = current_user.drafts.all 
+    else
+      @drafts = Draft.all
+    end
   	if @drafts.empty?
-  		@draft = Draft.new
+      if user_signed_in?
+
+        puts 'all drafts empty: '
+        @draft = current_user.drafts.build
+      else
+    		@draft = Draft.new
+      end
   	else
-  		@draft = Draft.last
+  		@draft = @drafts.last
   	end
   end
 
@@ -28,7 +38,7 @@ class DraftsController < ApplicationController
   def create
   	@draft = current_user.drafts.build(draft_params)
     @draft.save
-  	@drafts = current_user.drafts
+  	@drafts = current_user.drafts.all
   	respond_to do |format|
   		format.html
   		format.js
@@ -38,7 +48,7 @@ class DraftsController < ApplicationController
   def update
   	@draft = current_user.drafts.build(draft_params)
     @draft.save
-  	@drafts = current_user.drafts
+  	@drafts = current_user.drafts.all
   	respond_to do |format|
   		format.html
   		format.js
@@ -47,14 +57,17 @@ class DraftsController < ApplicationController
 
   def destroy
   	@draft = Draft.find(params[:id])
-  	@drafts = current_user.drafts
     @destroyId = @draft.id
     @draft.destroy
-    if current_user.drafts.empty?
-      @replaceDraft = current_user.drafts.build
-      @draft.save
+    if user_signed_in?
+      @drafts = current_user.drafts.all
     else
-      @replaceDraft = Draft.last
+      @drafts = Draft.all
+    end
+    if @drafts.empty?
+      @replaceDraft = current_user.drafts.build
+    else
+      @replaceDraft = current_user.drafts.last
     end
     
   	respond_to do |format|
@@ -64,10 +77,9 @@ class DraftsController < ApplicationController
   end
 
   def compare # current and other are IDs of drafts
-    if Draft.exists?(params[:current]) and Draft.exists?(params[:other])
-      puts "in if"
-      @current = Draft.find(params[:current]).content
-      @other = Draft.find(params[:other]).content
+    if current_user.drafts.exists?(params[:current]) and current_user.drafts.exists?(params[:other])
+      @current = current_user.drafts.find(params[:current]).content
+      @other = current_user.drafts.find(params[:other]).content
       @diffTemp = Differ.diff_by_word(@other, @current)
       @diff = @diffTemp.format_as(:html)
       puts @diff

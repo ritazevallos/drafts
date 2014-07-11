@@ -1,6 +1,7 @@
 Drafts::Application.routes.draw do
 
   devise_for :users
+  
   resources :drafts do
     collection do
       get 'compare'
