@@ -48,7 +48,7 @@ class DraftsController < ApplicationController
   	@drafts = Draft.all
     @destroyId = @draft.id
     @draft.destroy
-    if @Draft.empty?
+    if Draft.all.empty?
       @replaceDraft = Draft.new
     else
       @replaceDraft = Draft.last
