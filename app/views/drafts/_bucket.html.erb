@@ -19,6 +19,7 @@
 	$(".draft-block").click( function(e){
 		if (e.target === this) { 		//necessary so this doesn't execute 
 										//if we click delete link
+			event.stopImmediatePropagation()
 			$thisDraftId = $(this).attr("data-id");
 		    $.ajax({
 		      type: "GET",
