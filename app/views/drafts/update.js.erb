@@ -1,3 +1,4 @@
+alert('test')
 $('#bucket').html("<%= escape_javascript(render 'bucket', drafts: @drafts) %>");
 $('#draftForm').data('currentdraft',<%= @draft.id %>);
 console.log( "current draft: " + $('#draftForm').data('currentdraft') );

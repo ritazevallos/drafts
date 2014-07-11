@@ -8,7 +8,7 @@ class DraftsController < ApplicationController
   end
 
   def index
-  	@drafts = Draft.all
+  	@drafts = current_user.drafts
   	if @drafts.empty?
   		@draft = Draft.new
   	else
@@ -26,8 +26,9 @@ class DraftsController < ApplicationController
   end
 
   def create
-  	@draft = Draft.create(draft_params)
-  	@drafts = Draft.all
+  	@draft = current_user.drafts.build(draft_params)
+    @draft.save
+  	@drafts = current_user.drafts
   	respond_to do |format|
   		format.html
   		format.js
@@ -35,8 +36,9 @@ class DraftsController < ApplicationController
   end
 
   def update
-  	@draft = Draft.create(draft_params)
-  	@drafts = Draft.all
+  	@draft = current_user.drafts.build(draft_params)
+    @draft.save
+  	@drafts = current_user.drafts
   	respond_to do |format|
   		format.html
   		format.js
@@ -45,11 +47,12 @@ class DraftsController < ApplicationController
 
   def destroy
   	@draft = Draft.find(params[:id])
-  	@drafts = Draft.all
+  	@drafts = current_user.drafts
     @destroyId = @draft.id
     @draft.destroy
-    if Draft.all.empty?
-      @replaceDraft = Draft.new
+    if current_user.drafts.empty?
+      @replaceDraft = current_user.drafts.build
+      @draft.save
     else
       @replaceDraft = Draft.last
     end
